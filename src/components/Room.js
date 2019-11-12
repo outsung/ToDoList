@@ -1,53 +1,45 @@
 import React, { Component } from 'react';
+import './Room.css'
 import User from './User';
 
 
-/*
-todoList : [
-					"1. 오늘 리엑트 공부",
-					"2. 리엑트 네이티브도 공부",
-					"3. 리엑트로 ToDoList 틀 완성",
-					"4. ToDoList 와 node.js 연결",
-					"5. 리엑트 네이티브 설정 완료"
-				],
-todoIndex : 0
-*/
-
-
 class Room extends Component {
-	id = 3
-	state = {
-		users : [
+	
+	static defaultProps = {
+		user : [
 			{
 				id : 0,
-				name : "#ff6666"
-			},
-			{
-				id : 1,
-				name : "#cc6262"
-			},
-			{
-				id : 2,
-				name : "#111111"
+				index : 0,
+				name : "#ffffff",
+				todo : 0,
+				list : []
 			}
 		]
 	}
 
-	handleAdd = (data) => {
-		const { users } = this.state;
-		this.setState({
-			users : users.concat({ id : this.id++, ...data }) 
-		})
+	state = {
+
 	}
 
 	render(){
-		const { users } = this.state;
+
 		return(
-			<div>
-				{JSON.stringify(users)}
-			</div>
+			<ul className="room">
+				{this.props.user.map((u, i) => {
+					return(
+						<React.Fragment key={u.index}>
+						{
+							0 !== i && <div className="line"></div>
+						}
+						<User id={u.id} index={u.index}
+									name={u.name} todo={u.todo} list={u.list}/>
+						</React.Fragment >
+					)
+				})}
+			</ul>
 		)
 	}
 }
+
 
 export default Room;

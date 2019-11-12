@@ -1,28 +1,55 @@
 import React, { Component } from 'react';
+import './User.css'
 
 class User extends Component{
 	render(){
+		const userNameStyle = {
+			backgroundColor : this.props.name
+		}
+		
+		const userTodoString = 
+			this.props.list[this.props.todo].length <= 24
+			? this.props.list[this.props.todo]
+			: this.props.list[this.props.todo].substr(0,21) + "..."
+
 		return(
-			<li>
-				<div>{this.props.name}</div>
-				<span>{this.props.todolist}</span>
-				<UserFocue todolist={this.props.todolist}/>
+			<li className="userbox">
+				<div className="userid">({this.props.id})</div>
+				<div className="username" style={userNameStyle}></div>
+				<div className="usertodo">{this.props.todo + 1}. "{userTodoString}"</div>
+				<UserListBox list={this.props.list}/>
 			</li>
 		)
 	}
 }
 
-class UserFocue extends Component{
+class UserListBox extends Component{
+	static defaultProps = {
+		list : ["...",]
+	}
+	
 	render(){
 		return(
-			<div>
-				<ul>
-					{this.props.todolist}
-				</ul>
-			</div>
+			<ul className="userlistbox">
+				----List----
+				{this.props.list.map((l, i) => {
+					return <UserList key={i} l={l}/>
+				})}
+			</ul>
 		)
 	}
 }
+
+class UserList extends Component{
+	render(){
+		return(
+			<li>
+				{this.props.l}
+			</li>
+		)
+	}
+}
+
 
 
 export default User;

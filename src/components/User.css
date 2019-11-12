@@ -1,0 +1,55 @@
+
+.userbox {
+	position: relative;
+	height: 90px;
+	list-style-type : none;
+  margin: 0px;
+	border: 0px;
+	padding: 0px;
+
+
+	/*
+	background-color: blueviolet;
+	*/
+}
+
+.userbox .userid {
+	position: absolute;
+	margin: 0.5em;
+	font-size: 0.7em;
+	bottom: 0;
+}
+
+.userbox .username {
+	width: 70px;
+	height: 70px;
+
+	margin: 10px;
+
+	position: absolute;
+
+	border-radius: 100px;
+}
+
+.userbox .usertodo{
+	display: inline-block;
+
+	font-size: 2em;
+
+	margin: 31px 0px 0px 0px;
+
+	position: absolute;
+
+	left: 100px;
+}
+
+.userlistbox{
+	list-style-type : none;
+	padding: 0px;
+
+	position: absolute;
+	top : 0px;
+	left: 0px;
+	display: none;
+	background-color: aqua;
+}
