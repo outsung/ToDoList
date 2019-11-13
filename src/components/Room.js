@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import './Room.css'
 import User from './User';
 
-
 class Room extends Component {
 	
+
 	static defaultProps = {
 		user : [
 			{
@@ -18,20 +18,26 @@ class Room extends Component {
 	}
 
 	state = {
+		focus : -1
+	}
 
+	setfocus = (index) => {
+		console.log("focus change : "+ index)
+		this.setState({
+			focus : index
+		})
 	}
 
 	render(){
-
 		return(
-			<ul className="room">
+			<ul className="room" style={this.state.focus === -1 ? {overflowY : "scroll"} : {overflowY : "hidden"}}>
 				{this.props.user.map((u, i) => {
 					return(
 						<React.Fragment key={u.index}>
 						{
 							0 !== i && <div className="line"></div>
 						}
-						<User id={u.id} index={u.index}
+						<User id={u.id} index={u.index} focus={this.state.focus} setfocus={this.setfocus}
 									name={u.name} todo={u.todo} list={u.list}/>
 						</React.Fragment >
 					)

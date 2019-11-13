@@ -25,12 +25,12 @@ const room = [
       },
       {
         id : 3,
-        index : 3,
+        index : 1,
         name : "#321332",
         todo : 1,
         list : [
           "id : 3",
-          "index : 3",
+          "index : 1",
           "name : '#321332'",
           "todo : 1",
           "list : []"
@@ -69,7 +69,7 @@ const room = [
         todo : 1,
         list : [
           "id : 3",
-          "index : 3",
+          "index : 4",
           "name : '#321332'",
           "todo : 1",
           "list : []"
@@ -82,7 +82,7 @@ const room = [
         todo : 1,
         list : [
           "id : 3",
-          "index : 3",
+          "index : 5",
           "name : '#321332'",
           "todo : 1",
           "list : []"
@@ -112,6 +112,7 @@ class App extends Component {
   }
 
   render () {
+    console.log("하이");
     return (
       <>
       <h1 className="title">To Do List</h1>
