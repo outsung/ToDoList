@@ -15,6 +15,7 @@ class User extends Component{
 	}
 
 	handleUserBoxClick = () => {
+		console.log(this.props.index + " click");
 		if(this.props.index !== this.props.focus)
 			this.props.setfocus(this.props.index);
 	}
@@ -59,25 +60,40 @@ class User extends Component{
 				<div className="userid">({this.props.id})</div>
 				<div className="username" style={userNameStyle}></div>
 				<div className="usertodo">{this.props.todo + 1}. "{userTodoString}"</div>
-				<UserListBox list={this.props.list} dynamicStyle={this.dynamicStyle}/>
+				<UserListBox list={this.props.list} dynamicStyle={this.dynamicStyle} setfocus={this.props.setfocus}/>
 			</li>
 		)
 	}
 }
 
 class UserListBox extends Component{
-	static defaultProps = {
-		list : ["...",]
+
+	escKeyUp = (event) => {
+		if(event.keyCode === 27){
+			console.log("ESC Press!!!");
+			this.props.setfocus(-1);
+		}		
 	}
-	
+
+	handleUserListBoxUnclick = (event) => {
+		console.log("back click!!")
+		this.props.setfocus(-1);
+		event.stopPropagation();
+	}
+
+
 	render(){
 		return(
-			<ul className="userlistbox" style={this.props.dynamicStyle.userlistbox}>
+			<>
+			<ul className="userlistbox" style={this.props.dynamicStyle.userlistbox} onKeyUp={this.escKeyUp} tabIndex="0" >
 				----List----
 				{this.props.list.map((l, i) => {
 					return <UserList key={i} l={l}/>
 				})}
 			</ul>
+			<div className="userlistboxback" style={this.props.dynamicStyle.userlistbox} onClick={this.handleUserListBoxUnclick}>
+			</div>
+			</>
 		)
 	}
 }

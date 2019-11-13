@@ -30,7 +30,7 @@ class Room extends Component {
 
 	render(){
 		return(
-			<ul className="room" style={this.state.focus === -1 ? {overflowY : "scroll"} : {overflowY : "hidden"}}>
+			<ul className="room" style={this.state.focus === -1 ? {overflowY : "scroll"} : {overflowY : "hidden"}} >
 				{this.props.user.map((u, i) => {
 					return(
 						<React.Fragment key={u.index}>
