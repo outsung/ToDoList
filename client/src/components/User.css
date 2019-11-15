@@ -56,6 +56,7 @@
 	background-color: white;
 }
 
+
 .userlistbox{
 	list-style-type : none;
 	padding: 0px;
@@ -67,5 +68,31 @@
 	top: 0px;
 	
 	z-index: 2;
-	background-color: aqua;
+}
+
+.userlistname{
+	display: inline-block;
+
+	position: relative;
+	width: 70px;
+	height: 70px;
+
+	top: 0px;
+	margin: 10px;
+
+	border-radius: 100px;
+}
+
+.userlistscroll{
+	width: 100%;
+	height: 100%;
+	list-style-type : none;
+	margin-left: 60px;
+	overflow-y: scroll;
+}
+
+
+
+.userlistbox:focus{
+	outline:none;
 }

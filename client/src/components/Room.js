@@ -4,18 +4,19 @@ import User from './User';
 
 class Room extends Component {
 	
-
+	/*
 	static defaultProps = {
 		user : [
 			{
 				id : 0,
 				index : 0,
-				name : "#ffffff",
+				name : "#ff9999",
 				todo : 0,
-				list : []
+				list : ["..."]
 			}
 		]
 	}
+	*/
 
 	state = {
 		focus : -1
@@ -30,7 +31,9 @@ class Room extends Component {
 
 	render(){
 		return(
-			<ul className="room" style={this.state.focus === -1 ? {overflowY : "scroll"} : {overflowY : "hidden"}} >
+			<div className="roomview">
+			{this.props.user
+				?<ul className="room" style={this.state.focus === -1 ? {overflowY : "scroll"} : {overflowY : "hidden"}} >
 				{this.props.user.map((u, i) => {
 					return(
 						<React.Fragment key={u.index}>
@@ -43,9 +46,21 @@ class Room extends Component {
 					)
 				})}
 			</ul>
+				:<RoomLoding/>
+			}
+			</div>
 		)
 	}
 }
 
+class RoomLoding extends Component {
+	render(){
+		return(
+			<div className="roomloding">
+				<div className="loding"></div>
+			</div>
+		)
+	}
+}
 
 export default Room;
