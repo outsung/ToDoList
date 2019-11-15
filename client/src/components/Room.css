@@ -1,14 +1,15 @@
 
 .roomview{
+	border: 5px dotted blue;
 	width: 570px;
 	height: 100%;
-	overflow: hidden;
+	overflow: visible;
 	padding: 0px;
 	margin: 0px;
 }
 
 .room{
-
+	border: 5px dotted red;
 	position: relative;
 
 	width: 600px;
@@ -23,7 +24,7 @@
 }
 
 .line{
-
+	border: 5px dotted darkred;
 	list-style-type : none;
 
 	margin: 15px 0px 15px 0px;

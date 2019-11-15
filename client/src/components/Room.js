@@ -2,22 +2,42 @@ import React, { Component } from 'react';
 import './Room.css'
 import User from './User';
 
+/*
+Loding -> userList -> userToDoList
+<RoomLoding/>
+
+
+<userList>
+	..scroll : static scroll value
+	index : order value
+	<li>
+		name : profile color
+		todo : todo
+
+		----function----
+		hTodoIndex : todoIndex++
+
+	----function----
+	hIndex : 
+	hTodoIndex : todoIndex value change
+
+
+
+<userToDoList>
+	focus : -1 ~ index
+	list : todolist
+	todo : todoIndex
+
+	----function----
+	hTodo : todoIndex value change
+	hAdd : list.add
+	hDel : list.del
+
+
+*/
+
 class Room extends Component {
 	
-	/*
-	static defaultProps = {
-		user : [
-			{
-				id : 0,
-				index : 0,
-				name : "#ff9999",
-				todo : 0,
-				list : ["..."]
-			}
-		]
-	}
-	*/
-
 	state = {
 		focus : -1
 	}
