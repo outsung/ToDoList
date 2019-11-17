@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import './Room.css'
 import User from './User';
 
+import UserList from './room/UserList';
+import TodoList from './room/TodoList';
+
 /*
 Loding -> userList -> userToDoList
 <RoomLoding/>
@@ -35,6 +38,38 @@ Loding -> userList -> userToDoList
 
 
 */
+
+/*
+class Room extends Component {
+	
+	static defaultProps = {
+		user = ["error"]
+	}
+
+
+	state = {
+		focus : -1
+	}
+
+	setfocus = (index) => {
+		this.setState({
+			focus : index
+		})
+	}
+
+	render(){
+		return(
+			<>
+			{	this.state.focus === -1
+				? <UserList />
+				: <TodoList />
+			}
+			</>
+		)
+	}
+}
+*/
+
 
 class Room extends Component {
 	

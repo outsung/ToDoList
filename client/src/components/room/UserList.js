@@ -3,6 +3,39 @@ import './UserList.css';
 
 /*
 	props
+		user
+			index : order
+			name : profile color
+			todo : todoIndex
+			list : []
+
+			f
+			(DB)
+			hTodoIndex : todo Index change
+
+*/
+
+class UserList extends Component {
+
+	
+	
+	render(){
+		return(
+			<ul>
+				{this.props.user.map((u) => {
+					const todoValue = u.list[u.todo]
+
+					return <UserListLi key={u.index} index={u.index} name={this.props.name} todo={todoValue} hTodoIndex={this.props.hTodoIndex}/>
+				})}
+			</ul>
+		)
+	}
+}
+
+
+
+/*
+	props
 		index : order
 		name : profile color 
 		todo : todo
@@ -12,13 +45,15 @@ import './UserList.css';
 		hTodoIndex : todo Index change
 */
 
-class UserList extends Component {
+
+
+class UserListLi extends Component {
 	static defaultProps = {
 		index : -1,
 		name : "error",
 		todo : "error",
 
-		fTodoIndex : () => {
+		hTodoIndex : () => {
 			return -1;
 		} 
 	}
@@ -29,10 +64,10 @@ class UserList extends Component {
 	}
 
 	checkBoxClick = () => {
-		if(this.props.todo === "Nothing..")
+		if(this.props.todo === "Nothing...")
 			moveCheckBox();
 		else
-			this.props.hTodoIndex(this.props + 1);
+			this.props.hTodoIndex(this.props.todoIndex + 1);
 	}
 
 
