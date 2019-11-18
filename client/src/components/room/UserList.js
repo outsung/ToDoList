@@ -65,7 +65,7 @@ class UserListLi extends Component {
 
 	checkBoxClick = () => {
 		if(this.props.todo === "Nothing...")
-			moveCheckBox();
+			this.moveCheckBox();
 		else
 			this.props.hTodoIndex(this.props.todoIndex + 1);
 	}

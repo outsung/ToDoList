@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import './Room.css'
 import User from './User';
 
+/*
 import UserList from './room/UserList';
 import TodoList from './room/TodoList';
+*/
+
 
 /*
 Loding -> userList -> userToDoList
@@ -72,7 +75,6 @@ class Room extends Component {
 
 
 class Room extends Component {
-	
 	state = {
 		focus : -1
 	}

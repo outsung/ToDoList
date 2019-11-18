@@ -90,7 +90,7 @@ class todoListLi extends Component {
 	}
 
 	checkBoxClick = () => {
-		if(this.props.todoIndex === i)
+		if(this.props.todoIndex === this.props.i)
 			this.props.hTodoIndex(this.props.todoIndex - 1);
 		else
 			this.props.hTodoIndex(this.props.todoIndex + 1);
@@ -98,7 +98,7 @@ class todoListLi extends Component {
 
 
 	render(){
-		const checkboxStyle = (this.props.todoIndex === i) || (this.props.todoIndex - 1 === i)
+		const checkboxStyle = (this.props.todoIndex === this.props.i) || (this.props.todoIndex - 1 === this.props.i)
 			? {display : ""}
 			: {display : "none"}
 		return(
