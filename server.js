@@ -6,7 +6,9 @@ const port = process.env.PORT || 5000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+let roomCount = 0;
 let room = [
+	/*
 	{
 		id : 0,
 		name : "test",
@@ -112,11 +114,37 @@ let room = [
 			}
 		]
 	}
+	*/
 ]
+
 app.get('/api/room', (req, res) => {
-	console.log("res : " + res);
-	console.log("req : " + req);
 	res.send(room);
 });
+
+for(let i = 0; i < roomCount; ++i)
+	app.get('/api/room/' + room[i].name, (req, res) => {
+		res.send(room[i]);
+});
+
+
+
+app.post('/api/room', (req, res) =>{
+
+	let roomName = req.body.roomName;
+	let password = req.body.password;
+	
+	let params = {
+		id : roomCount,
+		name : roomName,
+		password : password,
+		user : []
+	}
+
+
+	room.push(params);
+	roomCount = roomCount + 1;
+});
+
+
 
 app.listen(port,() => console.log("Listening on port " + port));

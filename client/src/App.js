@@ -11,6 +11,7 @@ room
   id
   name
   password
+  userCount
   user
     id
     index
@@ -62,11 +63,11 @@ roomPassword : input Password
 
 class App extends Component {
   state = {
-    roomId : 0,
+    roomId : -1,
+    userId : -1,
+
     room : '"'
   }
-
-
 
   componentDidMount() {
     this.callApi()
@@ -78,19 +79,20 @@ class App extends Component {
     const response = await fetch('/api/room');
     const body = await response.json();
     return body;
-  }
+  };
+    
 
   render () {
-    this.componentDidMount();
-    console.log("하이");
+
+    console.log("App render");
     return (
       <>
       <h1 className="title">To Do List</h1>
       <div className="mainView">
-        
-        <Room user={
-          this.state.room ? this.state.room[this.state.roomId].user : '"'
-        }/>
+        { this.state.roomId === -1
+          ? <Join/>
+          : <Room user={ this.state.room ? this.state.room[this.state.roomId].user : '"' }/>
+        }
       </div>
       </>
     );

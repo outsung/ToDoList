@@ -89,20 +89,20 @@ class Room extends Component {
 	render(){
 		return(
 			<div className="roomview">
-			{this.props.user
+			{ this.props.user
 				?<ul className="room" style={this.state.focus === -1 ? {overflowY : "scroll"} : {overflowY : "hidden"}} >
-				{this.props.user.map((u, i) => {
-					return(
-						<React.Fragment key={u.index}>
-						{
-							0 !== i && <div className="line"></div>
-						}
-						<User id={u.id} index={u.index} focus={this.state.focus} setfocus={this.setfocus}
-									name={u.name} todo={u.todo} list={u.list}/>
-						</React.Fragment >
-					)
-				})}
-			</ul>
+					{this.props.user.map((u, i) => {
+						return(
+							<React.Fragment key={u.index}>
+							{
+								0 !== i && <div className="line"></div>
+							}
+							<User id={u.id} index={u.index} focus={this.state.focus} setfocus={this.setfocus}
+										name={u.name} todo={u.todo} list={u.list}/>
+							</React.Fragment >
+						)
+					})}
+				</ul>
 				:<RoomLoding/>
 			}
 			</div>
