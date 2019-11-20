@@ -64,9 +64,22 @@ roomPassword : input Password
 class App extends Component {
   state = {
     roomId : -1,
+    roomName : -1,
     userId : -1,
 
-    room : '"'
+    room : [],
+    joinRoom : '"'
+  }
+
+  setRoomName = (name) => {
+    let newRoomId = this.state.room.length;
+    for(let i = 0; i < this.state.room.length; ++i){
+      if(this.state.room.name === this.state.roomName) newRoomId = i;
+    }
+    this.setState({
+      roomName : name,
+      roomId : newRoomId
+    });
   }
 
   componentDidMount() {
@@ -83,15 +96,16 @@ class App extends Component {
     
 
   render () {
-
     console.log("App render");
+    console.log(this.state.room);
+    console.log(this.state.roomId);
     return (
       <>
       <h1 className="title">To Do List</h1>
       <div className="mainView">
         { this.state.roomId === -1
-          ? <Join/>
-          : <Room user={ this.state.room ? this.state.room[this.state.roomId].user : '"' }/>
+          ? <Join setRoomName={this.setRoomName}/>
+          : <Room user={ this.state.room === [] ? this.state.room[this.state.roomId].user : [] }/>
         }
       </div>
       </>
