@@ -148,7 +148,7 @@ for(let i = 0; i < roomCount; ++i)
 
 //-------------------------------------------------------------------------
 app.post('/api/room', (req, res) =>{
-	console.log("입력받음!!");
+	console.log("입력받음!!"+ req.body);
 
 	let type = req.body.type;
 	let roomName = req.body.roomName;

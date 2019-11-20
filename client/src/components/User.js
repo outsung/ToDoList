@@ -49,6 +49,7 @@ class User extends Component{
 			backgroundColor : this.props.name
 		}
 		
+		console.log(this.props.list);
 		const userTodoString = 
 			this.props.list[this.props.todo].length <= 24
 			? this.props.list[this.props.todo]

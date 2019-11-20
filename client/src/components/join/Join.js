@@ -63,7 +63,7 @@ class Join extends React.Component {
 		}
 
 		e.preventDefault();
-		this.addJoin()
+		this.addJoin(type)
 			.then((response) => {
 
 				console.log(response.data);
@@ -81,24 +81,17 @@ class Join extends React.Component {
 		this.setState(NewState);
 	}
 	
-	addJoin(){
+	addJoin(type){
 		console.log("post data!!");
 		const url = "http://localhost:5000/api/room";
-		let userData = new FormData();
-
-		
-		userData.append('type',"Make");
-		userData.append('roomName', this.state.roomName);
-		userData.append('password', this.state.password);
-		userData.append('name', this.setUserName());
-
-		const config = {
-			headers : {
-				"content-type" : "application/json"
-			}
-		}
-		//console.log(userData);
-		return post(url, userData, config);
+		const data = {
+			type : type,
+			roomName : this.state.roomName,
+			password : this.state.password,
+			userName : this.setUserName()
+		};
+		console.log(data);
+		return post(url, data);
 	}
 
 	render(){

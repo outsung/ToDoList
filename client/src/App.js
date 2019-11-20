@@ -67,11 +67,12 @@ class App extends Component {
     roomName : -1,
     userId : -1,
 
-    room : [],
+    room : "",
     joinRoom : '"'
   }
 
   setRoomName = (name) => {
+    console.log("setRoomName!!");
     let newRoomId = this.state.room.length;
     for(let i = 0; i < this.state.room.length; ++i){
       if(this.state.room.name === this.state.roomName) newRoomId = i;
@@ -80,6 +81,7 @@ class App extends Component {
       roomName : name,
       roomId : newRoomId
     });
+
   }
 
   componentDidMount() {
@@ -97,15 +99,15 @@ class App extends Component {
 
   render () {
     console.log("App render");
-    console.log(this.state.room);
-    console.log(this.state.roomId);
+    console.log("room" + this.state.room);
+    console.log("roomId" + this.state.roomId);
     return (
       <>
       <h1 className="title">To Do List</h1>
       <div className="mainView">
         { this.state.roomId === -1
           ? <Join setRoomName={this.setRoomName}/>
-          : <Room user={ this.state.room === [] ? this.state.room[this.state.roomId].user : [] }/>
+          : <Room user={ this.state.room.user ? this.state.room[this.state.roomId-1].user : "" }/>
         }
       </div>
       </>
