@@ -50,9 +50,12 @@ class User extends Component{
 		}
 		
 		const userTodoString = 
-			this.props.list[this.props.todo].length <= 24
-			? this.props.list[this.props.todo]
-			: this.props.list[this.props.todo].substr(0,21) + "..."
+			this.props.list[this.props.todo]
+			?
+				this.props.list[this.props.todo].length <= 24
+				? this.props.list[this.props.todo]
+				: this.props.list[this.props.todo].substr(0,21) + "..."
+			: "..."
 
 		return(
 			<li className="userbox" onClick={this.handleUserBoxClick} style={this.dynamicStyle.userBox}>

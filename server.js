@@ -3,8 +3,24 @@ const bodyParser = require('body-parser');
 const app = express();
 const port = process.env.PORT || 5000;
 
-app.use(bodyParser.json());
+
+//app.use(bodyParser.urlencoded({ extended: true }));
+//-------------------------------------------------------------------------
+/*
+app.configure(function () {
+	app.use(express.bodyParser());
+});
+   */
+
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin","*");
+  res.header("Access-Control-Allow-Headers","Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 
 let roomCount = 0;
 let room = [
@@ -113,38 +129,114 @@ let room = [
 				]
 			}
 		]
-	}
-	*/
+	}*/
 ]
 
+app.listen(port,() => console.log("Listening on port " + port));
+//-------------------------------------------------------------------------
 app.get('/api/room', (req, res) => {
 	res.send(room);
 });
 
-for(let i = 0; i < roomCount; ++i)
-	app.get('/api/room/' + room[i].name, (req, res) => {
-		res.send(room[i]);
-});
 
 
 
+
+
+
+//-------------------------------------------------------------------------
 app.post('/api/room', (req, res) =>{
+	console.log("/api/room");
+	console.log("----post----");
 
 	let roomName = req.body.roomName;
 	let password = req.body.password;
+	let userName = req.body.userName;
 	
-	let params = {
-		id : roomCount,
-		name : roomName,
-		password : password,
-		user : []
+	console.log(roomName, password, userName);
+
+	if(roomName === "" || password === ""){
+		console.log("   input none!");
 	}
+	else{
+		let type = "Make";
+		let roomIndex = -1;
+		room.forEach((r,i) => {
+			if(r.name === roomName){
+				roomIndex = i;
+				type = "Join";
+			}
+		})
+
+		if(type === "Make"){
+			console.log("   room Make!");
+			let paramsRoom = {
+				id : roomCount,
+				name : roomName,
+				password : password,
+				userCount : 0,
+				user : [{
+					id : 0,
+					index : 0,
+					name : userName,
+					todo : 0,
+					list : []
+				}]
+			};
 
 
-	room.push(params);
-	roomCount = roomCount + 1;
+			room.push(paramsRoom);
+			room[roomCount].userCount++;
+			roomCount = roomCount + 1;
+
+		}
+		else if(type === "Join"){
+			console.log("   room join!");
+			let paramsUser = {
+				id : room[roomIndex].userCount,
+				index : room[roomIndex].user.length,
+				name : userName,
+				todo : 0,
+				list : []
+			}
+
+			room[roomIndex].user.push(paramsUser);
+			room[roomIndex].userCount = room[roomIndex].userCount + 1;
+		}
+	}
+	res.send(room);
+
+	for(let i = 0; i < roomCount; ++i)
+	app.get('/api/room/' + room[i].name, (req, res) => {
+		res.send(room[i]);
+	});
+
+	for(let i = 0; i < roomCount; ++i)
+	app.post('/api/room/' + room[i].name, (req, res) => {
+		console.log("/api/room/" + room[i].name);
+		console.log("----post----");
+		
+		let userId = req.body.userId;
+		
+		console.log(room[i].name + "exit : id(" + userId+")");
+	
+		let userIndex = -1;
+		room[i].user.forEach((u,i) => {
+			if(userId === u.id)
+				userIndex = i;
+		})
+
+		room[i].user.splice(userIndex,1);
+		
+		if(room[i].user.length === 0)
+			room.splice(i,1);
+
+		res.send(room);
+	});
+
 });
 
 
 
-app.listen(port,() => console.log("Listening on port " + port));
+
+//-------------------------------------------------------------------------

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './todoList.css';
+import './TodoList.css';
 
 /*
 	props

@@ -16,37 +16,77 @@ class Join extends React.Component {
 
 	state = {
 		roomName : "",
-		password : ""
+		password : "",
+		userName : "",
 	}
 	
+	setUserName = () => {
+		let name = "#";
+		const hex = [0,1,2,3,4,5,6,7,8,9,"a","b","c","d","e","f"]
+		for(let i = 0; i < 6; ++i)
+			name = name + hex[Math.floor(Math.random() * (Math.floor(16) - Math.ceil(0))) + 0];
+		//console.log(name);
+		return name;
+	}
+
+	findRoom = (room, roomName) => {
+		//console.log(this.props.room.lenght);
+		for(let i = 0; i < room.length; ++i){
+			//console.log(roomName ,room[i].name)
+			if(roomName === room[i].name)
+				return i;
+		}
+
+		return -1;
+	}
 
 
 	handleFormSubmit = (e) => {
-		console.log("handleFormSubmit!!");
-		
-		if(this.state.roomName === "" && this.state.password === ""){
-			console.log("can't Join!!")
-		}
-		else{
-			console.log("room Make!!")
-			e.preventDefault();
-			this.addJoin()
-				.then((response) => {
-	
-					console.log(response.data);
-	
-				});
-	
-		}
+		//console.log("handleFormSubmit!!");
+		this.setState({userName : this.setUserName()});
 		/*
-		this.props.room.map((r, i) => {
-			if(r.name === this.state.roomName){
-				this.props.setRoomId(r.id);
-				
-			}
+		let type = "None";
 
-		})
+		if(this.state.roomName === "" && this.state.password === ""){
+			console.log("can't Join!!");
+			type = "None";
+		}
+		else {
+			//roomIndex = this.props.room.map((r, i) => { if(r.name === this.state.roomName) return i; })
+			
+			roomIndex = this.props.room.forEach(element, index => {
+				if(element.name === this.state.roomName) return index;
+			});
+			
+			//console.log(this.findRoom(this.state.roomName));
+			if(this.findRoom(this.state.roomName)){
+				this.props.setRoomName(this.state.roomName);
+				console.log("room Make!!");
+				type = "Make";
+			}
+			else {
+				this.props.setRoomName(this.state.roomName);
+				console.log("room Join!!");
+				type = "Join";
+			}
+		}
 		*/
+		e.preventDefault();
+		this.addJoin()
+			.then((response) => {
+				//console.log(response.data);
+				let roomIndex = this.findRoom(response.data, this.state.roomName);
+				//console.log(roomIndex);
+				//let roomId = response.data[roomIndex].id;
+				let roomName = response.data[roomIndex].name;
+				let userId = response.data[roomIndex].userCount - 1;
+
+				this.props.roomJoin(roomIndex, roomName, userId);
+			
+
+			});
+
+
 
 	}
 
@@ -58,24 +98,19 @@ class Join extends React.Component {
 	}
 	
 	addJoin(){
-		console.log("addJoin!!");
-		const url = "api/room";
-		const formData = new FormData();
-
-		formData.append("roomName", this.state.roomName);
-		formData.append("password", this.state.password);
-
-		const config = {
-			headers : {
-				"content-type" : "multipart/form-data"
-			}
-		}
-		
-		return post(url, formData, config);
+		//console.log("post data!!");
+		const url = "http://localhost:5000/api/room";
+		const data = {
+			roomName : this.state.roomName,
+			password : this.state.password,
+			userName : this.state.userName
+		};
+		//console.log(data);
+		return post(url, data);
 	}
 
 	render(){
-		console.log("Join render");
+		//console.log("Join render");
 		return(
 			<form onSubmit={this.handleFormSubmit}>
 				<span>Room Name</span>

@@ -18,7 +18,6 @@ import './UserList.css';
 class UserList extends Component {
 
 	
-	
 	render(){
 		return(
 			<ul>
@@ -85,7 +84,7 @@ class UserListLi extends Component {
 				<div className="profile" style={profileStyle}></div>
 				<img src={this.props.index === 0 ? "../img/master.png" : "../img/user.png"} />
 				<span className="todo">{this.props.todo}</span>
-				<div className="checkbox" onClick={this.checkBoxClick}></div>
+				<div className="checkbox" onClick={this.checkBoxClick}>{"누르더ㄴ가"}</div>
 			</li>
 		)
 	}
