@@ -17,7 +17,7 @@ class Join extends React.Component {
 	state = {
 		roomName : "",
 		password : "",
-		userName : "",
+		//userName : "",
 	}
 	
 	setUserName = () => {
@@ -43,7 +43,7 @@ class Join extends React.Component {
 
 	handleFormSubmit = (e) => {
 		//console.log("handleFormSubmit!!");
-		this.setState({userName : this.setUserName()});
+		//this.setState({userName : });
 		/*
 		let type = "None";
 
@@ -99,11 +99,11 @@ class Join extends React.Component {
 	
 	addJoin(){
 		//console.log("post data!!");
-		const url = "http://localhost:5000/api/room";
+		const url = "http://192.168.0.16:5000/api/room";
 		const data = {
 			roomName : this.state.roomName,
 			password : this.state.password,
-			userName : this.state.userName
+			userName : this.setUserName()
 		};
 		//console.log(data);
 		return post(url, data);

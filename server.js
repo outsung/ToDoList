@@ -3,6 +3,8 @@ const bodyParser = require('body-parser');
 const app = express();
 const port = process.env.PORT || 5000;
 
+const url = "http://192.168.0.16";
+
 
 //app.use(bodyParser.urlencoded({ extended: true }));
 //-------------------------------------------------------------------------
@@ -147,7 +149,8 @@ app.get('/api/room', (req, res) => {
 //-------------------------------------------------------------------------
 app.post('/api/room', (req, res) =>{
 	console.log("/api/room");
-	console.log("----post----");
+	const ip = req.headers['x-forwarded-for'] ||  req.connection.remoteAddress;
+	console.log(ip.slice(7) + "}post----");
 
 	let roomName = req.body.roomName;
 	let password = req.body.password;
@@ -186,7 +189,7 @@ app.post('/api/room', (req, res) =>{
 
 
 			room.push(paramsRoom);
-			room[roomCount].userCount++;
+			room[room.length - 1].userCount++;
 			roomCount = roomCount + 1;
 
 		}
@@ -206,14 +209,17 @@ app.post('/api/room', (req, res) =>{
 	}
 	res.send(room);
 
+	//각 방 정보 출력
+	/*
 	for(let i = 0; i < roomCount; ++i)
-	app.get('/api/room/' + room[i].name, (req, res) => {
-		res.send(room[i]);
-	});
-
+		app.get('/api/room' + room[i].name, (req, res) => {
+			res.send(room[i]);
+		});
+	*/
+	//각 방 post 얻기
 	for(let i = 0; i < roomCount; ++i)
-	app.post('/api/room/' + room[i].name, (req, res) => {
-		console.log("/api/room/" + room[i].name);
+		app.post('/api/room' + room[i].name, (req, res) => {
+		console.log("/api/room" + room[i].name);
 		console.log("----post----");
 		
 		let userId = req.body.userId;
@@ -232,7 +238,7 @@ app.post('/api/room', (req, res) =>{
 			room.splice(i,1);
 
 		res.send(room);
-	});
+		});
 
 });
 

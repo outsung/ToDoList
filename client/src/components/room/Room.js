@@ -23,17 +23,26 @@ class Room extends Component {
 	render(){
 		return(
 			<>
-			{	this.state.focus === -1
-				? this.props.user
+			{ this.props.user
+				? this.state.focus === -1
 					? <UserList user={this.props.user} setfocus={this.setfocus}/>
-					: <UserList user={this.props.user} setfocus={this.setfocus}/>
-				: <TodoList />
+					: <TodoList index={this.state.focus} name={this.props.user[this.state.focus].name} todoIndex={this.props.user[this.state.focus].todo} list={this.props.user[this.state.focus].list}/>
+				: <RoomLoding />
 			}
 			</>
 		)
 	}
 }
 
+class RoomLoding extends Component {
+	render(){
+		return(
+			<div className="roomloding">
+				<div className="loding"></div>
+			</div>
+		)
+	}
+}
 
 
 export default Room;

@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import './UserList.css';
 
+import userImg from '../img/user.png';
+import masterImg from '../img/master.png';
+
 /*
 	props
 		user
@@ -19,12 +22,13 @@ class UserList extends Component {
 
 	
 	render(){
+		console.log(this.props.user);
 		return(
 			<ul>
-				{this.props.user.map((u) => {
+				{this.props.user.map((u,i) => {
 					const todoValue = u.list[u.todo]
 
-					return <UserListLi key={u.index} index={u.index} name={this.props.name} todo={todoValue} hTodoIndex={this.props.hTodoIndex}/>
+					return <UserListLi key={i} index={i} name={u.name} todo={todoValue} hTodoIndex={this.props.hTodoIndex}/>
 				})}
 			</ul>
 		)
@@ -50,7 +54,7 @@ class UserListLi extends Component {
 	static defaultProps = {
 		index : -1,
 		name : "error",
-		todo : "error",
+		todo : "Nothing...",
 
 		hTodoIndex : () => {
 			return -1;
@@ -71,20 +75,20 @@ class UserListLi extends Component {
 
 
   render(){
-		const liStyle = this.props.index !== 1
+		const liStyle = this.props.index !== 0
 			? {borderTop : "black 2px solid"}
 			: {borderTop : "none"}
 		
 		const profileStyle = {
-			backgoundColor : this.props.name
+			backgroundColor : this.props.name
 		}
 
 		return(
 			<li style={liStyle}>
-				<div className="profile" style={profileStyle}></div>
-				<img src={this.props.index === 0 ? "../img/master.png" : "../img/user.png"} />
+				<div className="profile" style={profileStyle}>{this.props.name}</div>
+				<img src={this.props.index === 0 ? masterImg : userImg} />
 				<span className="todo">{this.props.todo}</span>
-				<div className="checkbox" onClick={this.checkBoxClick}>{"누르더ㄴ가"}</div>
+				<div className="checkbox" onClick={this.checkBoxClick}> Check Box </div>
 			</li>
 		)
 	}

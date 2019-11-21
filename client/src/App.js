@@ -135,7 +135,7 @@ class App extends Component {
 
   roomExit(){
 		//console.log("post data!!");
-		const url = "http://localhost:5000/api/room/" + this.state.roomName;
+		const url = "http://192.168.0.16:5000/api/room" + this.state.roomName;
 		const data = {
 			userId : this.state.userId
 		};

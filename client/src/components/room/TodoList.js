@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import './TodoList.css';
 
+import userImg from '../img/user.png';
+import masterImg from '../img/master.png';
+
 /*
 	props
 		index : order
@@ -26,7 +29,7 @@ class todoList extends Component {
 		index : -1,
 		name : "error",
 		todoIndex : -1,
-		list : ["error"],
+		list : [],
 
 		hTodoIndex : () => {
 			return -1
@@ -52,11 +55,12 @@ class todoList extends Component {
 		return(
 			<>
 				<div className="profile"></div>
-				<img src={this.props.index === 0 ? "../img/master.png" : "../img/user.png"} />
+				<img src={this.props.index === 0 ? userImg : masterImg} />
 				<ul className="todolist">
 					{this.props.list.map((l, i) => {
 							return <todoListLi key={i} l={l} i={i} todoIndex={this.props.todoIndex} hTodoIndex={this.props.hTodoIndex}/>
 					})}
+					<li></li>
 				</ul>
 			</>
 		)
