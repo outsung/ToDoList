@@ -6,15 +6,18 @@ import masterImg from '../img/master.png';
 
 /*
 	props
+		roomName
 		user
-			index : order
+			id : id
 			name : profile color
 			todo : todoIndex
 			list : []
 
-			f
-			(DB)
-			hTodoIndex : todo Index change
+		f
+		(DB)
+		setTodoIndex : todo Index change
+
+		setfocus
 
 */
 
@@ -22,13 +25,14 @@ class UserList extends Component {
 
 	
 	render(){
-		console.log(this.props.user);
+		//console.log(this.props.user);
 		return(
-			<ul>
+			<ul className="userlist">
 				{this.props.user.map((u,i) => {
 					const todoValue = u.list[u.todo]
 
-					return <UserListLi key={i} index={i} name={u.name} todo={todoValue} hTodoIndex={this.props.hTodoIndex}/>
+					return <UserListLi key={i} index={i} id={u.id} name={u.name} todoIndex={u.todo} todo={todoValue} roomName={this.props.roomName} setfocus={this.props.setfocus}
+										setTodoIndex={this.props.setTodoIndex}/>
 				})}
 			</ul>
 		)
@@ -39,13 +43,18 @@ class UserList extends Component {
 
 /*
 	props
+		roomName
+		id : id
 		index : order
 		name : profile color 
 		todo : todo
+		todoIndex : todoIndex
 		
 		f
 		(DB)
-		hTodoIndex : todo Index change
+		setTodoIndex : todo Index change
+		
+		setfocus : set focus
 */
 
 
@@ -56,22 +65,31 @@ class UserListLi extends Component {
 		name : "error",
 		todo : "Nothing...",
 
-		hTodoIndex : () => {
+		setTodoIndex : () => {
 			return -1;
 		} 
 	}
 
+
 	moveCheckBox = () => {
 		//
+		//console.log("우웅우웅");
 		return 0;
 	}
 
-	checkBoxClick = () => {
+	checkBoxClick = (event) => {
+		event.stopPropagation();
 		if(this.props.todo === "Nothing...")
 			this.moveCheckBox();
 		else
-			this.props.hTodoIndex(this.props.todoIndex + 1);
+			this.props.setTodoIndex(this.props.roomName, this.props.id, this.props.todoIndex + 1);
 	}
+
+
+	liOnClick = () => {
+		this.props.setfocus(this.props.index);
+	}
+
 
 
   render(){
@@ -84,11 +102,11 @@ class UserListLi extends Component {
 		}
 
 		return(
-			<li style={liStyle}>
-				<div className="profile" style={profileStyle}>{this.props.name}</div>
-				<img src={this.props.index === 0 ? masterImg : userImg} />
-				<span className="todo">{this.props.todo}</span>
-				<div className="checkbox" onClick={this.checkBoxClick}> Check Box </div>
+			<li className="userlistli" style={liStyle} onClick={this.liOnClick}>
+				<div className="profile" style={profileStyle}></div>
+				<img src={this.props.index === 0 ? masterImg : userImg} alt={this.props.index === 0 ? "user" : "master"}/>
+				<span className="todo">{this.props.todoIndex + 1}.{this.props.todo}</span>
+				<div className="checkbox" onClick={this.checkBoxClick}></div>
 			</li>
 		)
 	}

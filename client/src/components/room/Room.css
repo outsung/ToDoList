@@ -1,0 +1,51 @@
+
+
+
+
+
+.roomloding{
+
+	position: relative;
+
+	width: 100%;
+	height: 100%;
+
+
+
+	margin: auto 0;
+	padding: 0px;
+}
+
+
+.loader,
+.loader:before,
+.loader:after {
+    animation: 1s infinite ease-in-out;
+}
+.loader:before,
+.loader:after {
+    width: 100%; 
+    height: 100%;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.loding {
+	width: 100px;
+	height: 100px;
+	border-radius: 50%;
+	margin: 150px 250px;
+	display: inline-block;
+	position: relative;
+	vertical-align: middle;
+	background-color: rgb(88, 133, 216);
+	animation: loadingKey 1s infinite linear;
+}
+
+@keyframes loadingKey {
+	0% 		{transform: rotate(0deg);   border-radius: 50%;}
+	50% 	{transform: rotate(90deg);  border-radius: 0%; }
+	100% 	{transform: rotate(180deg); border-radius: 50%;}
+}

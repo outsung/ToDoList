@@ -1,14 +1,21 @@
 import React from 'react';
-import {post} from 'axios';
+import './Join.css';
+
+
+//import Axios from '';
+//import {post} from 'axios';
 
 
 
 /*
 	props
 		room
+		
 		f
-		setRoomId
-		setUserId
+		(db)
+		roomJoin
+
+		roomJoinSet
 */
 
 
@@ -42,37 +49,8 @@ class Join extends React.Component {
 
 
 	handleFormSubmit = (e) => {
-		//console.log("handleFormSubmit!!");
-		//this.setState({userName : });
-		/*
-		let type = "None";
-
-		if(this.state.roomName === "" && this.state.password === ""){
-			console.log("can't Join!!");
-			type = "None";
-		}
-		else {
-			//roomIndex = this.props.room.map((r, i) => { if(r.name === this.state.roomName) return i; })
-			
-			roomIndex = this.props.room.forEach(element, index => {
-				if(element.name === this.state.roomName) return index;
-			});
-			
-			//console.log(this.findRoom(this.state.roomName));
-			if(this.findRoom(this.state.roomName)){
-				this.props.setRoomName(this.state.roomName);
-				console.log("room Make!!");
-				type = "Make";
-			}
-			else {
-				this.props.setRoomName(this.state.roomName);
-				console.log("room Join!!");
-				type = "Join";
-			}
-		}
-		*/
 		e.preventDefault();
-		this.addJoin()
+		this.props.roomJoin(this.state.roomName, this.state.password, this.setUserName())
 			.then((response) => {
 				//console.log(response.data);
 				let roomIndex = this.findRoom(response.data, this.state.roomName);
@@ -81,13 +59,8 @@ class Join extends React.Component {
 				let roomName = response.data[roomIndex].name;
 				let userId = response.data[roomIndex].userCount - 1;
 
-				this.props.roomJoin(roomIndex, roomName, userId);
-			
-
+				this.props.roomJoinSet(roomIndex, roomName, userId);
 			});
-
-
-
 	}
 
 	handleValueChange = (e) => {
@@ -97,26 +70,27 @@ class Join extends React.Component {
 		this.setState(NewState);
 	}
 	
-	addJoin(){
+	/*
+	roomJoin(roomName, password, userName){
 		//console.log("post data!!");
-		const url = "http://192.168.0.16:5000/api/room";
+		const url = "/api/room";
 		const data = {
-			roomName : this.state.roomName,
-			password : this.state.password,
-			userName : this.setUserName()
+			roomName : roomName,
+			password : password,
+			userName : userName
 		};
 		//console.log(data);
 		return post(url, data);
 	}
-
+	*/
 	render(){
-		//console.log("Join render");
+		//console.log(this.props);
 		return(
-			<form onSubmit={this.handleFormSubmit}>
-				<span>Room Name</span>
+			<form className="form" onSubmit={this.handleFormSubmit} autocomplete="off">
+				<label>Room Name</label>
 				<input type="text" name="roomName" value={this.state.roomName} onChange={this.handleValueChange} />
 
-				<span>Password</span>
+				<label>Password</label>
 				<input type="text" name="password" value={this.state.password} onChange={this.handleValueChange} />
 
 				<button type="submit"> Join </button>

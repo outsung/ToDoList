@@ -6,6 +6,10 @@ import masterImg from '../img/master.png';
 
 /*
 	props
+		roomName : roomName
+		id : id
+
+
 		index : order
 		name : profile color
 		todoIndex : todoIndex
@@ -13,17 +17,18 @@ import masterImg from '../img/master.png';
 		
 		f
 		(DB)
-		hTodoIndex : todo Index change
-		hListAdd : todo list Add
+		setTodoIndex : todo Index change 
+		addTodoList : todo list Add
+		...
 		hListDel : todo list Del
 		hListCha : todo list change
 
 
-		hFocus : focus change
+		setfocus : focus change
 
 */
 
-class todoList extends Component {
+class TodoList extends Component {
 
 	static defaultProps = {
 		index : -1,
@@ -31,10 +36,10 @@ class todoList extends Component {
 		todoIndex : -1,
 		list : [],
 
-		hTodoIndex : () => {
+		setTodoIndex : () => {
 			return -1
 		},
-		hListAdd :  () => {
+		addTodoList :  () => {
 			return -1
 		},
 		hListDel :  () => {
@@ -44,25 +49,78 @@ class todoList extends Component {
 			return -1
 		},
 
-		hFocus :  () => {
+		setfocus :  () => {
 			return -1
 		}
 
 	}
 
+	state = {
+		newTodoList : "add...",
+		backClickCount : 1
+	}
+
+
+	componentDidMount(){
+		window.onclick = this.backClick;
+	}
+	todoListClick = () => {
+		this.setState({backClickCount : this.state.backClickCount + 1});
+		console.log("todoList onclick call!! " + this.state.backClickCount);
+	}
+	backClick = () => {
+		this.setState({backClickCount : this.state.backClickCount - 1});
+		console.log("window onclick call!! " + this.state.backClickCount);
+		if(this.state.backClickCount < 0){
+			console.log("focus -1 change!!!")
+			this.props.setfocus(-1);
+		}
+	}
+	componentWillUnmount(){
+		window.onclick = () => {};
+	}
+
+
+
+	handleFormSubmit = (e) => {
+		e.preventDefault();
+		this.props.addTodoList(this.props.roomName, this.props.id, this.state.newTodoList)
+			.then((response) => {
+				console.log("todo ADD {" + response);
+			});
+		this.setState({newTodoList : "add..."});
+	}
+	handleValueChange = (e) => {
+		let NewState = {};
+		NewState[e.target.name] = e.target.value;
+		
+		this.setState(NewState);
+	}
+
+
 
 	render(){
+		const profileStyle = {
+			backgroundColor : this.props.name
+		}
+
 		return(
-			<>
-				<div className="profile"></div>
-				<img src={this.props.index === 0 ? userImg : masterImg} />
-				<ul className="todolist">
+			<div className="todolist" onClick={this.todoListClick}> 
+				<div className="profile" style={profileStyle}></div>
+				<img src={this.props.index === 0 ? masterImg : userImg} alt={this.props.index === 0 ? "master" : "user"}/>
+				<ul className="todolistul">
 					{this.props.list.map((l, i) => {
-							return <todoListLi key={i} l={l} i={i} todoIndex={this.props.todoIndex} hTodoIndex={this.props.hTodoIndex}/>
+							return <TodoListLi key={i} l={l} i={i} todoIndex={this.props.todoIndex}
+												id={this.props.id} roomName={this.props.roomName} setTodoIndex={this.props.setTodoIndex}/>
 					})}
-					<li></li>
+					<li className="todolistliform" style={this.props.list.length === 0 ? {borderTop : "none"} : {borderTop : "black 2px solid"}}>
+						<form onSubmit={this.handleFormSubmit}>
+							<input type="text" name="newTodoList" value={this.state.newTodoList} onChange={this.handleValueChange} />
+							<button type="submit"></button>
+						</form>
+					</li>
 				</ul>
-			</>
+			</div>
 		)
 	}
 }
@@ -72,46 +130,56 @@ class todoList extends Component {
 
 /*
 	props
+		id
+		roomName
+
 		todoIndex : todoIndex
 		i : ListIndex
 		l : ListValue
 
 		f
 		(DB)
-		hTodoIndex : todo Index change
+		setTodoIndex : todo Index change
 
 */
-class todoListLi extends Component {
+class TodoListLi extends Component {
 	
 	static defaultProps = {
 		todoIndex : -1,
-		i : "error",
-		l : -1,
+		i : -1,
+		l : "error",
 
-		hTodoIndex : () => {
+		setTodoIndex : () => {
 			return -1
 		}
 	}
 
 	checkBoxClick = () => {
+		console.log(this.props.todoIndex);
 		if(this.props.todoIndex === this.props.i)
-			this.props.hTodoIndex(this.props.todoIndex - 1);
+			this.props.setTodoIndex(this.props.roomName, this.props.id, this.props.todoIndex + 1);
 		else
-			this.props.hTodoIndex(this.props.todoIndex + 1);
+			this.props.setTodoIndex(this.props.roomName, this.props.id, this.props.todoIndex - 1);
 	}
 
 
 	render(){
+		const liStyle = this.props.i !== 0
+			? {borderTop : "black 2px solid"}
+			: {borderTop : "none"}
 		const checkboxStyle = (this.props.todoIndex === this.props.i) || (this.props.todoIndex - 1 === this.props.i)
 			? {display : ""}
 			: {display : "none"}
+		const lStyle = this.props.todoIndex > this.props.i
+			? {textDecoration : "line-through", textDecorationColor : "red"}
+			: {textDecoration : "none"}
 		return(
-			<li>
-				<span>{this.props.l}</span>
+			<li className="todolistli" style={liStyle}>
+				<span style={lStyle}>{this.props.l}</span>
 				<div className="checkbox" style={checkboxStyle} onClick={this.checkBoxClick}></div>
 			</li>
 		)
 	}
 }
 
-export default todoList;
+export default TodoList;

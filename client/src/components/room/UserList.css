@@ -1,0 +1,57 @@
+.userlist{
+    list-style-type: none;
+
+    margin: 0px;
+    padding: 0px;
+
+    
+
+    height: 400px;
+    width: 630px;
+    
+    overflow-y: scroll;
+}
+
+.userlistli{
+    height: 90px;
+    position: relative;
+}
+
+.userlistli .profile{
+    position: absolute;
+    width: 70px;
+    height: 70px;
+    border-radius: 100px;
+
+    margin: 10px;
+}
+
+.userlistli img{
+    position: absolute;
+
+    width: 18px;
+    margin: 70px;
+}
+
+.userlistli .todo{
+    position: absolute;
+
+    left: 100px;
+
+    font-size: 2em;
+
+    margin: 31px 0px 0px 0px;
+    
+}
+
+.userlistli .checkbox{
+    position: absolute;
+
+    right: 30px;
+
+    width: 20px;
+    height: 20px;
+
+    margin: 35px 0px 0px 0px;
+
+}

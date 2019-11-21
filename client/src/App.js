@@ -3,7 +3,8 @@ import Join from './components/join/Join';
 import Room from './components/room/Room';
 //import User from './components/User';
 
-import {post} from 'axios';
+import * as Axios from "./Axios";
+//import {post} from 'axios';
 import './App.css';
 
 /*
@@ -46,7 +47,7 @@ roomPassword : input Password
 */
 
 
-class App extends Component {
+class App extends Component{
   state = {
     roomIndex : -1,
     roomName : -1,
@@ -56,7 +57,7 @@ class App extends Component {
     joinRoom : '"'
   }
 
-  roomJoin = (roomIndex, roomName, userId) => {
+  roomJoinSet = (roomIndex, roomName, userId) => {
     //console.log("roomJoin!! -{ " + roomIndex, roomName, userId);
 
     this.setState({
@@ -97,12 +98,13 @@ class App extends Component {
   componentDidMount() {
     window.addEventListener('beforeunload', (event) => {
 
-      if(this.state.roomName !== -1)
-      this.roomExit()
-        .then((response) => {
-          console.log(response.data);
-        });
       event.returnValue = "There is pending work. Sure you want to leave?";
+      if(this.state.roomName !== -1)
+        Axios.roomExit(this.state.roomName, this.state.userId)
+          .then((response) => {
+            console.log(response.data);
+          });
+
     });
 
     this.callApi()
@@ -133,16 +135,17 @@ class App extends Component {
   }
   */
 
-  roomExit(){
+  /*
+  roomExit(roomName, userId){
 		//console.log("post data!!");
-		const url = "http://192.168.0.16:5000/api/room" + this.state.roomName;
+		const url = "/api/room" + roomName;
 		const data = {
-			userId : this.state.userId
+			userId : userId
 		};
 		//console.log(data);
 		return post(url, data);
 	}
-    
+    */
   
 
   render () {
@@ -150,6 +153,7 @@ class App extends Component {
     this.callApi()
       .then(res => this.setState({room: res}))
       .catch(err => console.log(err));
+    
     //console.log("App render");
     //console.log("roomId " + this.state.roomIndex);
     return (
@@ -157,8 +161,9 @@ class App extends Component {
       <h1 className="title">To Do List</h1>
       <div className="mainView">
         { this.state.roomIndex === -1
-          ? <Join room={this.state.room} roomJoin={this.roomJoin}/>
-          : <Room user={ (this.state.roomIndex) in (this.state.room) ? this.state.room[this.state.roomIndex].user : ""}/>
+          ? <Join room={this.state.room} roomJoinSet={this.roomJoinSet} roomJoin={Axios.roomJoin}/>
+          : <Room user={ (this.state.roomIndex) in (this.state.room) ? this.state.room[this.state.roomIndex].user : ""} roomName={this.state.roomName}
+                  setTodoIndex={Axios.setTodoIndex} addTodoList={Axios.addTodoList}/>
         }
       </div>
       </>

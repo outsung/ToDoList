@@ -3,8 +3,6 @@ const bodyParser = require('body-parser');
 const app = express();
 const port = process.env.PORT || 5000;
 
-const url = "http://192.168.0.16";
-
 
 //app.use(bodyParser.urlencoded({ extended: true }));
 //-------------------------------------------------------------------------
@@ -159,7 +157,7 @@ app.post('/api/room', (req, res) =>{
 	console.log(roomName, password, userName);
 
 	if(roomName === "" || password === ""){
-		console.log("   input none!");
+		console.log("error!!!]    input none!");
 	}
 	else{
 		let type = "Make";
@@ -219,25 +217,53 @@ app.post('/api/room', (req, res) =>{
 	//각 방 post 얻기
 	for(let i = 0; i < roomCount; ++i)
 		app.post('/api/room' + room[i].name, (req, res) => {
-		console.log("/api/room" + room[i].name);
-		console.log("----post----");
-		
-		let userId = req.body.userId;
-		
-		console.log(room[i].name + "exit : id(" + userId+")");
-	
-		let userIndex = -1;
-		room[i].user.forEach((u,i) => {
-			if(userId === u.id)
-				userIndex = i;
-		})
+			console.log("/api/room" + room[i].name);
+			console.log("----post----");
+			
+			let userId = req.body.userId;
+			let todoIndex = req.body.todoIndex; //todo Index set
+			let newTodoList = req.body.newTodoList; //todo list add
+			
+			let userIndex = -1;
+			room[i].user.forEach((u,i) => {
+				if(userId === u.id)
+					userIndex = i;
+			})
 
-		room[i].user.splice(userIndex,1);
-		
-		if(room[i].user.length === 0)
-			room.splice(i,1);
+			if(todoIndex !== undefined){
+				// room user todo index set
+				console.log(room[i].name + "{ id(" + userId + ") todo Index set(" + todoIndex + ")");
+				room[i].user[userIndex].todo = todoIndex;
+			}
+			else if(newTodoList !== undefined){
+				// room user todo list add
+				if(newTodoList){
+					console.log(room[i].name + "{ id(" + userId + ") todo list add('" + newTodoList + "')");
+					room[i].user[userIndex].list.push(newTodoList);
+				}
+				else{
+					console.log("error!!!]" + room[i].name + "{ id(" + userId + ") todo list add");
+				}
+			}
+			else{
+				//room exit
+				console.log(room[i].name + "exit : id(" + userId+")");
 
-		res.send(room);
+				/*
+				let userIndex = -1;
+				room[i].user.forEach((u,i) => {
+					if(userId === u.id)
+						userIndex = i;
+				})
+				*/
+
+				room[i].user.splice(userIndex,1);
+				
+				if(room[i].user.length === 0)
+					room.splice(i,1);
+			}
+
+			res.send(room);
 		});
 
 });

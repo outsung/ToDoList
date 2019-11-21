@@ -10,8 +10,24 @@ body{
 }
 
 
+.title{
+	border: 5px dotted rgb(110, 110, 110);
+	z-index: 10;
+
+	display: block;
+
+	font-size: 100px;
+
+	text-align: center;
+
+	position: relative;
+	top: 0px;
+	left: 0px;
+	margin: auto;
+}
+
 .mainView{
-	border: 5px dotted black;
+	border: 5px dotted rgb(150, 150, 150);
 
 	padding: 0px;
 	display: block;
@@ -24,26 +40,16 @@ body{
 	right: 0;
 	
 	height: 400px;
-	max-width: 600px;
+	width: 600px;
 	
 
-	margin: 10rem auto;
+	margin: 6rem auto;
 
-	overflow: visible;
+	overflow: hidden;
 
 }
 
-.title{
-	border: 5px dotted black;
-	z-index: 10;
 
-	display: inline;
-
-	font-size: 100px;
-
-	position: absolute;
-	margin: 10rem auto;
-}
 
 .gray-backgound {
 	background: darkgray;
