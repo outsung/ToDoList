@@ -49,17 +49,25 @@ class Join extends React.Component {
 
 
 	handleFormSubmit = (e) => {
+		//if(this.state.roomName === "" && this.state.password === "")
+
 		e.preventDefault();
 		this.props.roomJoin(this.state.roomName, this.state.password, this.setUserName())
 			.then((response) => {
-				//console.log(response.data);
-				let roomIndex = this.findRoom(response.data, this.state.roomName);
-				//console.log(roomIndex);
-				//let roomId = response.data[roomIndex].id;
-				let roomName = response.data[roomIndex].name;
-				let userId = response.data[roomIndex].userCount - 1;
+				if((this.state.roomName !== "") && (this.state.password !== "")){
+					//console.log(response.data);
+					let roomIndex = this.findRoom(response.data, this.state.roomName);
+					//console.log(roomIndex);
+					//let roomId = response.data[roomIndex].id;
+					let roomName = response.data[roomIndex].name;
+					let userId = response.data[roomIndex].userCount - 1;
 
-				this.props.roomJoinSet(roomIndex, roomName, userId);
+					this.props.roomJoinSet(roomIndex, roomName, userId);
+				}
+				else{
+					// 우웅우웅
+					console.log("input None");
+				}
 			});
 	}
 
