@@ -2,7 +2,7 @@
 	"name": "management",
 	"version": "1.0.0",
 	"scripts": {
-		"start" : "nodemon server.js",
+		"start" : "node server.js",
 		"client": "cd client && npm start",
 		"server": "nodemon server.js",
 		"dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
