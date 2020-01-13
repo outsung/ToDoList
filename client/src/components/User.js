@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './User.css'
 
 class User extends Component{
-
 	dynamicStyle = {
 		userBox : {
 			backgroundColor: "white",
